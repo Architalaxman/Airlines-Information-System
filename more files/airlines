@@ -1,0 +1,102 @@
+<?php 
+	include_once("includes/header.php"); 
+	if($_REQUEST[airlines_id])
+	{
+		$SQL="SELECT * FROM airlines WHERE airlines_id = $_REQUEST[airlines_id]";
+		$rs=mysqli_query($con,$SQL) or die(mysqli_error($con));
+		$data=mysqli_fetch_assoc($rs);
+	}
+?> 
+
+	<div class="crumb">
+    </div>
+    <div class="clear"></div>
+	<div id="content_sec">
+		<div class="col1">
+			<div class="contact">
+				<h4 class="heading colr"><?=$heading?>Add Airlines</h4>
+				<?php
+				if($_REQUEST['msg']) { 
+				?>
+				<div class="msg"><?=$_REQUEST['msg']?></div>
+				<?php
+				}
+				?>
+				<form action="lib/airlines.php" enctype="multipart/form-data" method="post" name="frm_airlines">
+					<ul class="forms">
+						<li class="txt">Select Company</li>
+						<li class="inputfield">
+							<select name="airlines_company_id" class="bar" required/>
+								<?php echo get_new_optionlist("company","company_id","company_name",$data[airlines_company_id]); ?>
+							</select>
+						</li>
+					</ul>
+					<ul class="forms">
+						<li class="txt">Select Airline Type</li>
+						<li class="inputfield">
+							<select name="airlines_at_id" class="bar" required/>
+								<?php echo get_new_optionlist("airlines_type","at_id","at_name",$data[airlines_at_id]); ?>
+							</select>
+						</li>
+					</ul>
+					<ul class="forms">
+						<li class="txt">Flight Name</li>
+						<li class="inputfield"><input name="airlines_name" id="airlines_name" type="text" class="bar" required value="<?=$data[airlines_name]?>"/></li>
+					</ul>
+					<ul class="forms">
+						<li class="txt">Flight Number</li>
+						<li class="inputfield"><input name="airlines_no" id="airlines_no" type="text" class="bar" required value="<?=$data[airlines_no]?>"/></li>
+					</ul>
+					<ul class="forms">
+						<li class="txt">From City</li>
+						<li class="inputfield">
+							<select name="airlines_from" class="bar" required/>
+								<?php echo get_new_optionlist("city","city_id","city_name",$data[airlines_from]); ?>
+							</select>
+						</li>
+					</ul>
+					<ul class="forms">
+						<li class="txt">To City</li>
+						<li class="inputfield">
+							<select name="airlines_to" class="bar" required/>
+								<?php echo get_new_optionlist("city","city_id","city_name",$data[airlines_to]); ?>
+							</select>
+						</li>
+					</ul>
+					<ul class="forms">
+						<li class="txt">Departure Time</li>
+						<li class="inputfield"><input name="airlines_deaprture" type="text" class="bar" required value="<?=$data[airlines_deaprture]?>"/></li>
+					</ul>
+					<ul class="forms">
+						<li class="txt">Arival Time</li>
+						<li class="inputfield"><input name="airlines_arrival" type="text" class="bar" required value="<?=$data[airlines_arrival]?>"/></li>
+					</ul>
+					<ul class="forms">
+						<li class="txt">Total Travel Time</li>
+						<li class="inputfield"><input name="airlines_travel_time" id="airlines_travel_time" type="text" class="bar" required value="<?=$data[airlines_travel_time]?>" onchange="validateEmail(this)" /></li>
+					</ul>
+					<ul class="forms">
+						<li class="txt">Total Distance</li>
+						<li class="inputfield"><input name="airlines_total_distance" id="airlines_total_distance" type="text" class="bar" required value="<?=$data[airlines_total_distance]?>" onchange="validateEmail(this)" /></li>
+					</ul>
+					<ul class="forms">
+						<li class="txt">Image</li>
+						<li class="inputfield"><input name="airlines_image" type="file" class="bar"/></li>
+					</ul>
+					<div style="clear:both"></div>
+					<ul class="forms">
+						<li class="txt">&nbsp;</li>
+						<li class="textfield"><input type="submit" value="Submit" class="simplebtn"></li>
+						<li class="textfield"><input type="reset" value="Reset" class="resetbtn"></li>
+					</ul>
+					<input type="hidden" name="act" value="save_airlines">
+					<input type="hidden" name="avail_image" value="<?=$data[airlines_image]?>">
+					<input type="hidden" name="airlines_id" value="<?=$data[airlines_id]?>">
+				</form>
+			</div>
+		</div>
+		<div class="col2">
+			<?php include_once("includes/sidebar.php"); ?> 
+		</div>
+	</div>
+<?php include_once("includes/footer.php"); ?> 
